@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,7 @@ public class MissionDemolition : MonoBehaviour
     public Text uitLevel;
     public Text uitShots;
     public Text uitButton;
+    public Text uitBest;
     public Vector3 castlePos;
     public GameObject[] castles;
 
@@ -25,6 +27,7 @@ public class MissionDemolition : MonoBehaviour
     public int level;
     public int levelMax;
     public int shotsTaken;
+    public int bestScore;
     public GameObject castle;
     public GameMode mode = GameMode.idle;
     public string showing = "Show Slingshot";
@@ -69,6 +72,14 @@ public class MissionDemolition : MonoBehaviour
     {
         uitLevel.text = "Level: " + (level + 1) + " of " + levelMax;
         uitShots.text = "Shots Taken: " + shotsTaken;
+        if (shotsTaken < bestScore)
+        {
+            uitBest.text = "Best Attempt: " + shotsTaken;
+        }
+        else
+        {
+            uitBest.text = "Best Attempt: " + bestScore;
+        }
     }
 
     void Update()
@@ -77,6 +88,7 @@ public class MissionDemolition : MonoBehaviour
 
         if((mode == GameMode.playing) && Goal.goalMet)
         {
+            shotsTaken = bestScore;
             mode = GameMode.levelEnd;
             SwitchView("Show Both");
             Invoke("NextLevel", 2f);
@@ -95,7 +107,7 @@ public class MissionDemolition : MonoBehaviour
 
     public void SwitchView(string eView = "")
     {
-        if (eView == " ")
+        if (eView == "")
         {
             eView = uitButton.text;
         }

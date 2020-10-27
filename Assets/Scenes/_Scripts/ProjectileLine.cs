@@ -12,6 +12,7 @@ public class ProjectileLine : MonoBehaviour
     private LineRenderer line;
     private GameObject _poi;
     private List<Vector3> points;
+    private List<List<Vector3>> lineList;
 
     void Awake()
     {
@@ -19,6 +20,7 @@ public class ProjectileLine : MonoBehaviour
         line = GetComponent<LineRenderer>();
         line.enabled = false;
         points = new List<Vector3>();
+        lineList = new List<List<Vector3>>();
     }
 
     public GameObject poi
@@ -32,8 +34,9 @@ public class ProjectileLine : MonoBehaviour
             _poi = value;
             if (_poi != null)
             {
-                line.enabled = false;
-                points = new List<Vector3>();
+                line.enabled = true;
+                lineList.Add(points);
+
                 AddPoint();
             }
         }
